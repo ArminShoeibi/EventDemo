@@ -4,9 +4,8 @@ namespace EventDemo
 {
     public class Employee
     {
-
         private DateTime _birthDate;
-        public event Action OnBirthday;
+        public event EventHandler OnBirthDay;
 
 
         public string FirstName { get; set; }
@@ -23,16 +22,13 @@ namespace EventDemo
                 _birthDate = value;
                 if (_birthDate.Date == DateTime.Today)
                 {
-                    OnBirthday += Employee_OnBirthday;
-                    OnBirthday();
+                    if (OnBirthDay is not null)
+                    {
+                        OnBirthDay(this, EventArgs.Empty);
+                    }
                 }
 
             }
-        }
-
-        private void Employee_OnBirthday()
-        {
-            Console.WriteLine("Happy Birthday");
         }
     }
 }
